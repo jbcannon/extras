@@ -3,8 +3,7 @@ library(lidR)
 library(sf)
 library(spanner)
 
-las = readLAS('unseg.laz')
-writeLAS(las, 'C:/Users/jeffery.cannon/OneDrive - Joseph W. Jones Ecological Research Center/Desktop/unseg2.laz', index=TRUE)
+las = readLAS('unseg2.laz')
 
 boles = lidR::filter_poi(las, Intensity>40000)
 tree_locs = get_raster_eigen_treelocs(boles, res=0.1, pt_spacing=0.025,
