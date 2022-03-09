@@ -1,18 +1,18 @@
+setwd('C:/Users/jeffery.cannon/Documents/GitHub/extras/spanner_troubleshoot/')
 devtools::install_github('bi0m3trics/spanner')
 library(lidR)
 library(sf)
 library(spanner)
 
-las = readLAS('unseg.laz')
-writeLAS(las, 'C:/Users/jeffery.cannon/OneDrive - Joseph W. Jones Ecological Research Center/Desktop/unseg2.laz', index=TRUE)
+las = readLAS('unseg2.laz')
 
-boles = lidR::filter_poi(las, Intensity>40000)
-tree_locs = get_raster_eigen_treelocs(boles, res=0.1, pt_spacing=0.025,
+#boles = lidR::filter_poi(las, Intensity>40000)
+tree_locs = get_raster_eigen_treelocs(las, res=0.1, pt_spacing=0.025,
                                                dens_threshold = 0, eigen_threshold = 0.9,
                                                grid_slice_min=1.2, grid_slice_max=1.6,
-                                               minimum_polygon_area = pi*0.005^2) #down to 1 cm dbh
+                                               minimum_polygon_area = pi*0.005^2, output_location = tempdir()) #down to 1 cm dbh
 
-las_ids = spanner::segment_graph(boles, tree_locs,
+las_ids = spanner::segment_graph(las, tree_locs,
                                  k = 50,
                                  distance.threshold = 0.3,
                                  subsample.graph = 0.15, 
